@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 # 项目名称
 project(modern_cpp)
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 option(RELEASE_LIB "build version of release" OFF)
 
 # 编译模式
@@ -14,12 +14,10 @@ else ()
 endif ()
 
 # 编译参数
-if (NOT PLATFORM_WIN)
-    if (${CMAKE_BUILD_TYPE} STREQUAL "Release")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -fPIC -Ofast")
-    else ()
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -DEBUG -g -O0 -fPIC")
-    endif ()
+if (${CMAKE_BUILD_TYPE} STREQUAL "Release")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -fPIC -Ofast")
+else ()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -DEBUG -g -O0 -fPIC")
 endif ()
 
 # 添加头文件路径
@@ -50,6 +48,7 @@ set(SOURCE_FILES
         )
 
 add_library(${CMAKE_PROJECT_NAME} SHARED ${SOURCE_FILES})
+add_subdirectory(test)
 
 set(OUTPUT_ROOT ${PROJECT_SOURCE_DIR}/output)
 set(MY_OUTPUT_ROOT ${OUTPUT_ROOT}/${CMAKE_PROJECT_NAME})
